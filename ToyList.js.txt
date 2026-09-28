@@ -1,0 +1,81 @@
+function ToyList({ toys, onDeleteToy }) {
+  return (
+    <section className="list-section">
+      <div className="list-heading">
+        <h2>Toy Inventory</h2>
+        <span className="toy-count">
+          Total Toys: {toys.length}
+        </span>
+      </div>
+
+      {toys.length === 0 ? (
+        <p className="empty-message">
+          No toys are available. Add the first toy.
+        </p>
+      ) : (
+        <div className="toy-grid">
+          {toys.map((toy) => (
+            <article className="toy-card" key={toy.id}>
+              {toy.imageUrl ? (
+                <img
+                  src={toy.imageUrl}
+                  alt={toy.toyName}
+                  className="toy-image"
+                />
+              ) : (
+                <div className="image-placeholder">
+                  No Image
+                </div>
+              )}
+
+              <h3>{toy.toyName}</h3>
+
+              <p>
+                <strong>Category:</strong> {toy.category}
+              </p>
+
+              <p>
+                <strong>Age Group:</strong> {toy.ageGroup}
+              </p>
+
+              <p>
+                <strong>Price:</strong> ₹{toy.price}
+              </p>
+
+              <p>
+                <strong>Quantity:</strong> {toy.quantity}
+              </p>
+
+              <p>
+                <strong>Status:</strong>{" "}
+                <span
+                  className={
+                    toy.available
+                      ? "available"
+                      : "not-available"
+                  }
+                >
+                  {toy.available
+                    ? "Available"
+                    : "Not Available"}
+                </span>
+              </p>
+
+              <p>{toy.description}</p>
+
+              <button
+                className="delete-button"
+                onClick={() => onDeleteToy(toy.id)}
+              >
+                Delete
+              </button>
+            </article>
+          ))}
+        </div>
+      )}
+    </section>
+  );
+}
+
+export default ToyList;
+

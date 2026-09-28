@@ -1,0 +1,57 @@
+import { useState } from "react";
+import Header from "./Header";
+import ToyForm from "./ToyForm";
+import ToyList from "./ToyList";
+import buildingBlocksImage from "./assests/BB.jpg";
+import "./App.css";
+
+function App() {
+  const [toys, setToys] = useState([
+    {
+      id: 1,
+      toyName: "Building Blocks",
+      category: "Educational",
+      ageGroup: "6-8 Years",
+      price: 799,
+      quantity: 5,
+      description: "Colourful blocks for creative construction.",
+      available: true,
+      imageUrl: buildingBlocksImage,
+    },
+  ]);
+
+  const addToy = (newToy) => {
+    const toyWithId = {
+      ...newToy,
+      id: Date.now(),
+    };
+
+    setToys((previousToys) => [
+      ...previousToys,
+      toyWithId,
+    ]);
+  };
+
+  const deleteToy = (toyId) => {
+    setToys((previousToys) =>
+      previousToys.filter((toy) => toy.id !== toyId)
+    );
+  };
+
+  return (
+    <div className="app-container">
+      <Header />
+
+      <main className="shop-layout">
+        <ToyForm onAddToy={addToy} />
+
+        <ToyList
+          toys={toys}
+          onDeleteToy={deleteToy}
+        />
+      </main>
+    </div>
+  );
+}
+
+export default App;

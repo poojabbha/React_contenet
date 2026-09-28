@@ -1,0 +1,51 @@
+Akthar - foreign key, joins,rest api=> cpncepts are not cleared....repeating same answer multiple times, also did not explain the diffene between 
+put and patch properly 6
+
+Chandan - not responded(present)	
+
+kishore- foreign key,stored proceducer and functions,difference bet foreging key and primary  => able to answer only one questions that not proper. he said
+needs to revised the topcis..not prepared 6
+
+
+Rathnam - asked 2 questions-> Junit(gave answer) but need to prepare SQL and posgres. ans shorltly. need to  prepare the topics propelry and in detail
+not confident while answering  the  5
+
+MAdhu->postgres=>answers are short but correct. needs to answer in detailed and ,more technical way
+   7
+
+
+Rajanna =>execution plan and not audible-> having net isiue got disconnedtc   
+
+mohmad- rest api -> having clear knw of conecpts but need to give answers in more detials and in clear way. in common API startety he supposed to explain all 
+strategy with proper flow. Joins not explained properly 6
+
+veerava-> JUNIT (need to prepare not anwer the ques), index explain but not in details....web services(answer is not clear),confused -5
+
+
+Dhirendra-> mockito, stored procedures and functions(given  very short answer just explained one difference between stored procedure and function.)
+not able to understand question properly -6
+
+elavrasan -> he is from Automation testing backgroud. so we asked him about core java concept but he coulld ans completrly and properly. explained 
+oops concepts shortly-5
+
+
+Praveen -> explained difference properly between clustered index and non clustered index with scenario where he could appllied it before. but answer could be in more detailed way. 7
+
+
+Naveen -> asked question relateed to webservices-> IT seems like he read the answwr from somewhere and then delivered the answer as he tooks pauses at a time of speaking-4
+
+Rashid-> explained  index concept but needs to be in more detailed and cleared way. But whatever he has delivered is correct- 6
+
+paramita -> her camera was not working, so not sure how she is answered the questions but she gave correct answer on key constraints in sql.-6	
+
+yashwant -> asked about primary key, he is not sure abiut his answer and gave incorrect answer needs to prepare SQL and posgrsql topcis properly-5
+
+
+Hi team,Thank you all. please prepare properly and bring some confidence in the next viva, and give detailed answers with proper example and on the asked topic only, all the best everyobe
+
+
+
+
+
+
+

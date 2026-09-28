@@ -1,0 +1,29 @@
+function Header() {
+  const headerStyle = {
+    backgroundColor: "#6c3fc5",
+    color: "white",
+    padding: "24px",
+    textAlign: "center",
+    borderRadius: "14px",
+    boxShadow: "0 5px 14px rgba(0, 0, 0, 0.15)",
+  };
+
+  return (
+    <header style={headerStyle}>
+      <h1 style={{ margin: 0 }}>
+        Happy Toys Shop
+      </h1>
+
+      <p
+        style={{
+          marginBottom: 0,
+          color: "#f1eaff",
+        }}
+      >
+        Toy Inventory Management System
+      </p>
+    </header>
+  );
+}
+
+export default Header;

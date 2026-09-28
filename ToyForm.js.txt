@@ -1,0 +1,296 @@
+import { useEffect, useState } from "react";
+
+const initialFormData = {
+  toyName: "",
+  category: "",
+  ageGroup: "3-5 Years",
+  price: "",
+  quantity: "1",
+  description: "",
+  available: true,
+};
+
+function ToyForm({ onAddToy }) {
+  const [formData, setFormData] = useState(initialFormData);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [imageUrl, setImageUrl] = useState("");
+  const [error, setError] = useState("");
+
+  const handleChange = (event) => {
+    const { name, value, type, checked } = event.target;
+
+    setFormData((previousData) => ({
+      ...previousData,
+      [name]: type === "checkbox" ? checked : value,
+    }));
+  };
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+
+    if (!file) {
+      setSelectedFile(null);
+      setImageUrl("");
+      return;
+    }
+
+    if (!file.type.startsWith("image/")) {
+      setError("Please select a valid image.");
+      event.target.value = "";
+      return;
+    }
+
+    if (file.size > 2 * 1024 * 1024) {
+      setError("Image must be smaller than 2 MB.");
+      event.target.value = "";
+      return;
+    }
+
+    setError("");
+    setSelectedFile(file);
+    setImageUrl(URL.createObjectURL(file));
+  };
+
+  useEffect(() => {
+    return () => {
+      if (imageUrl) {
+        URL.revokeObjectURL(imageUrl);
+      }
+    };
+  }, [imageUrl]);
+
+  const validateForm = () => {
+    if (formData.toyName.trim() === "") {
+      return "Toy name is required.";
+    }
+
+    if (formData.category === "") {
+      return "Please select a toy category.";
+    }
+
+    if (Number(formData.price) <= 0) {
+      return "Price must be greater than zero.";
+    }
+
+    if (Number(formData.quantity) < 1) {
+      return "Quantity must be at least one.";
+    }
+
+    if (formData.description.trim().length < 10) {
+      return "Description must contain at least 10 characters.";
+    }
+
+    return "";
+  };
+
+  const resetForm = () => {
+    setFormData(initialFormData);
+    setSelectedFile(null);
+    setImageUrl("");
+    setError("");
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    const validationMessage = validateForm();
+
+    if (validationMessage) {
+      setError(validationMessage);
+      return;
+    }
+
+    const newToy = {
+      ...formData,
+      price: Number(formData.price),
+      quantity: Number(formData.quantity),
+      imageUrl: imageUrl,
+      fileName: selectedFile ? selectedFile.name : "No image",
+    };
+
+    onAddToy(newToy);
+    resetForm();
+
+    /*
+      Clearing React state does not always clear
+      the browser's file input display.
+    */
+    event.target.reset();
+  };
+
+  return (
+    <section className="form-section">
+      <h2>Add New Toy</h2>
+
+      {error && <p className="error-message">{error}</p>}
+
+      <form onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label htmlFor="toyName">Toy Name</label>
+
+          <input
+            id="toyName"
+            type="text"
+            name="toyName"
+            value={formData.toyName}
+            onChange={handleChange}
+            placeholder="Enter toy name"
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="category">Category</label>
+
+          <select
+            id="category"
+            name="category"
+            value={formData.category}
+            onChange={handleChange}
+          >
+            <option value="">Select Category</option>
+            <option value="Educational">Educational</option>
+            <option value="Electronic">Electronic</option>
+            <option value="Outdoor">Outdoor</option>
+            <option value="Soft Toy">Soft Toy</option>
+            <option value="Vehicle">Vehicle</option>
+          </select>
+        </div>
+
+        <fieldset className="form-group">
+          <legend>Age Group</legend>
+
+          <label className="radio-label">
+            <input
+              type="radio"
+              name="ageGroup"
+              value="3-5 Years"
+              checked={formData.ageGroup === "3-5 Years"}
+              onChange={handleChange}
+            />
+            3-5 Years
+          </label>
+
+          <label className="radio-label">
+            <input
+              type="radio"
+              name="ageGroup"
+              value="6-8 Years"
+              checked={formData.ageGroup === "6-8 Years"}
+              onChange={handleChange}
+            />
+            6-8 Years
+          </label>
+
+          <label className="radio-label">
+            <input
+              type="radio"
+              name="ageGroup"
+              value="9+ Years"
+              checked={formData.ageGroup === "9+ Years"}
+              onChange={handleChange}
+            />
+            9+ Years
+          </label>
+        </fieldset>
+
+        <div className="row">
+          <div className="form-group">
+            <label htmlFor="price">Price</label>
+
+            <input
+              id="price"
+              type="number"
+              name="price"
+              min="1"
+              value={formData.price}
+              onChange={handleChange}
+              placeholder="Price"
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="quantity">Quantity</label>
+
+            <input
+              id="quantity"
+              type="number"
+              name="quantity"
+              min="1"
+              value={formData.quantity}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="description">Description</label>
+
+          <textarea
+            id="description"
+            name="description"
+            rows="4"
+            maxLength="150"
+            value={formData.description}
+            onChange={handleChange}
+            placeholder="Enter toy description"
+          />
+
+          <small>
+            {formData.description.length}/150 characters
+          </small>
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="toyImage">Toy Image</label>
+
+          <input
+            id="toyImage"
+            type="file"
+            accept="image/*"
+            onChange={handleFileChange}
+          />
+
+          {selectedFile && (
+            <p className="file-name">
+              Selected: {selectedFile.name}
+            </p>
+          )}
+
+          {imageUrl && (
+            <img
+              src={imageUrl}
+              alt="Toy preview"
+              className="image-preview"
+            />
+          )}
+        </div>
+
+        <label className="checkbox-label">
+          <input
+            type="checkbox"
+            name="available"
+            checked={formData.available}
+            onChange={handleChange}
+          />
+          Toy is available
+        </label>
+
+        <div className="button-group">
+          <button type="submit" className="primary-button">
+            Add Toy
+          </button>
+
+          <button
+            type="button"
+            className="secondary-button"
+            onClick={resetForm}
+          >
+            Reset
+          </button>
+        </div>
+      </form>
+    </section>
+  );
+}
+
+export default ToyForm;
